@@ -1,228 +1,74 @@
-body {
-  margin: 0;
-  background-color: #111;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-  color: white;
-  user-select: none;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.container {
-  position: relative;
-  height: 100vh;
-  width: 100vw;
-  background: linear-gradient(#005555, #220033);
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    font-family: Arial, sans-serif;
 }
 
-.road {
-  position: absolute;
-  width: 80vw;
-  height: 100vh;
-  left: 10vw;
-  background-color: #222;
-  overflow: hidden;
-  perspective: 800px;
-  transform-style: preserve-3d;
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
-.divider {
-  position: absolute;
-  left: calc(50% - 3px);
-  width: 6px;
-  height: 50px;
-  background-color: white;
-  z-index: 1;
+.hud {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
 }
 
-.obstacle {
-  position: absolute;
-  width: 60px;
-  height: 80px;
-  background-color: #2a2ae0;
-  border-radius: 10px;
-  z-index: 2;
-}
-
-.obstacle::before {
-  content: '';
-  position: absolute;
-  width: 54px;
-  height: 15px;
-  background-color: #111;
-  top: 15px;
-  left: 3px;
-  border-radius: 5px;
-}
-
-.score, .speed {
-  position: absolute;
-  padding: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 5px;
-  z-index: 10;
-}
-
-.score {
-  top: 10px;
-  left: 10px;
-  font-size: 20px;
-}
-
-.speed {
-  top: 10px;
-  right: 10px;
-  font-size: 20px;
-}
-
-.car {
-  position: absolute;
-  width: 60px;
-  height: 100px;
-  bottom: 70px;
-  left: calc(50% - 30px);
-  transition: left 0.1s linear;
-  z-index: 5;
-}
-
-.car-body {
-  position: absolute;
-  width: 60px;
-  height: 80px;
-  background-color: #e82a2a;
-  border-radius: 10px;
-  bottom: 0;
-}
-
-.car-roof {
-  position: absolute;
-  width: 50px;
-  height: 30px;
-  background-color: #e82a2a;
-  border-radius: 10px 10px 0 0;
-  top: 5px;
-  left: 5px;
-}
-
-.car-window {
-  position: absolute;
-  width: 40px;
-  height: 20px;
-  background-color: #111;
-  border-radius: 5px;
-  top: 10px;
-  left: 10px;
-}
-
-.headlight {
-  position: absolute;
-  width: 10px;
-  height: 5px;
-  background-color: #ffff00;
-  border-radius: 2px;
-  bottom: 5px;
-}
-
-.headlight.left {
-  left: 10px;
-}
-
-.headlight.right {
-  right: 10px;
-}
-
-.wheel {
-  position: absolute;
-  width: 14px;
-  height: 25px;
-  background-color: #111;
-  border-radius: 7px;
-}
-
-.wheel.front-left {
-  top: 15px;
-  left: -7px;
-}
-
-.wheel.front-right {
-  top: 15px;
-  right: -7px;
-}
-
-.wheel.back-left {
-  bottom: 15px;
-  left: -7px;
-}
-
-.wheel.back-right {
-  bottom: 15px;
-  right: -7px;
-}
-
-.game-controls {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  z-index: 10;
-}
-
-.control-btn {
-  width: 70px;
-  height: 70px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.control-btn:active {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.game-over, .start-screen {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 20;
+.controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    text-align: center;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .game-over {
-  display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 10px;
+    display: none;
 }
 
-button {
-  padding: 15px 30px;
-  font-size: 20px;
-  background-color: #e82a2a;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px;
+.restart-btn {
+    padding: 10px 20px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
-button:hover {
-  background-color: #ff4040;
-}
-
-h1, h2 {
-  color: #e82a2a;
-  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
-
-p {
-  text-align: center;
-  margin: 20px 0;
-  font-size: 18px;
+.restart-btn:hover {
+    background: #ff6666;
 }
